@@ -1,9 +1,20 @@
 ***************************************************
+
+***************************************************
+
+***************************************************
 HOW TO RUN?
-1. extract the zip,
-2. in bash: run > node app.js
-3. adminlogin: username>user
-4. adminlogin: password>123
+1. download and extract the university-website.zip
+2. ensure you have node.js downloaded on local machine
+3. load university-website into vscode
+4. in bash: run > node app.js
+5. navigate to http://localhost:3330/ in your local browser
+6. adminlogin: username>user
+7. adminlogin: password>123
+***************************************************
+
+***************************************************
+
 ***************************************************
 
 
