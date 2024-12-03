@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Website Title</title>
+  <link rel="stylesheet" href="/css/Home-Page/Home.css">
+  <link rel="stylesheet" href="/css/Home-Page/Header.css">
+  <link rel="stylesheet" href="/css/Home-Page/Sidebar.css">
+  <link rel="stylesheet" href="/css/Home-Page/contactUs.css">
+  <link rel="stylesheet" href="/css/Home-Page/aside.css">
+  <link rel="stylesheet" href="/css/Home-Page/posts.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+  integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .event-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex-wrap: wrap;
+      word-wrap: break-word;
+  }
+
+  .event-item {
+      display: flex;
+      max-width: 240px;
+      flex-direction: column;
+      width: 100%;
+      flex-wrap: wrap;
+      text-wrap: wrap;
+      word-wrap: break-word;
+      padding: 1.5rem;
+      border-radius: 8px;
+      background: #fff;
+      color: #333;
+      font-family: 'Poppins', Arial, sans-serif;
+      text-align: left;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .event-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      text-wrap: wrap;
+  }
+
+  .event-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      text-wrap: wrap;
+  }
+
+  .event-date-time, .event-description, .event-location {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      word-wrap: break-word;
+      flex-wrap: wrap;
+      text-wrap: wrap;
+  }
+
+  .event-date-time {
+      color: #007bff;
+      font-weight: 600;
+      text-wrap: wrap;
+  }
+
+  .event-description {
+      color: #555;
+      text-wrap: wrap;
+  }
+
+  .no-events {
+      font-size: 1.2rem;
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      border-radius: 8px;
+      text-wrap: wrap;
+  }
+  </style>
+</head>
+<body>
+
+  <header class="Main-header">
+    <nav class="navbar">
+      <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="#about">About</a></li>
+          
+              <li><a href="/booking/booking-form">Book Photographer</a></li>
+              
+          </li>
+      </ul>
+      <ul class="nav-admin">
+          <li><a href="/admin/dashboard">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section class="hero" style="background-image: url('https://images.adsttc.com/media/images/5c62/02a8/284d/d1be/0300/012d/large_jpg/UMP_GAPP_08_Timber_Promenade_Dec.jpg?1549927060'); background-size:cover;">
+    <h1>Welcome to Your University Of Mpumalanga</h1>
+    <!-- <p>Our platform simplifies the management and sharing of essential university documents and events. Experience seamless access to resources designed for both administrators and visitors.</p> -->
+    
+  </section>
+  <aside class="announcements">
+    <h2>Announcements</h2>
+    <div class="announcement-content">
+        
+        <% if (announcements.length > 0) { %>
+
+          <% announcements.forEach(announcement => { %>
+            <div class="announcement-card" onclick="handleCardClick(this)">
+              
+                <h3 style="text-align: center;"><i class="fa-solid fa-bullhorn" style="color: orange;"></i></h3>
+                <p><strong>Date:</strong> <%= new Date(announcement.post_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                <p><%= announcement.announcement_text %></p>
+            </div>
+          <% }) %>
+          <% } else { %>
+          <p>No announcements at the moment.</p>
+        <% } %>
+    </div>
+  </aside>
+  <main> 
+    <nav class="sidebar">
+      
+      <h2>Important - Links</h2>
+      <ul>
+          <li><a href="https://myump.ump.ac.za/login/index.php"><i class="fa-solid fa-m" style="color: rgb(255, 140, 0); font-size:medium;"></i>. Moodle</a></li>
+          <li><a href="https://ienabler.ump.ac.za/pls/prodi41/w99pkg.mi_login"><i class="fa-solid fa-graduation-cap" style="color: #180081; font-size:medium;"></i>. Student Portal</a></li>
+          <li><a href="https://www.ump.ac.za/"><i class="fa-solid fa-building-columns" style="color: black; font-size:medium;"></i>. Official Website</a></li>
+      </ul>
+
+      <h2>Important Dates (Calendar)</h2>
+      <ul class="event-list">
+        <% if (typeof events !== 'undefined' && events.length > 0) { %>
+            <% events.forEach(event => { %>
+                <li>
+                    <button class="event-item" onclick="openEventModal('<%= event.id %>')">
+                        <div class="event-title"><%= event.title %></div>
+                        <div class="event-date-time">
+                            <strong>Date:</strong> <%= event.event_date %> | <strong>Time:</strong> <%= event.event_time %>
+                        </div>
+                        <div class="event-description" style="">
+                            <strong>Description:</strong> <%= event.description %>
+                        </div>
+                        <div class="event-location">
+                            <strong>Location:</strong> <%= event.location %>
+                        </div>
+                    </button>
+                </li>
+            <% }) %>
+        <% } else { %>
+            <li class="no-events">No upcoming events</li>
+        <% } %>
+    </ul>
+      <!-- description -->
+      <h2>Documents (open & download)</h2>
+      <% if (documents.length > 0) { %>
+      <div class="documents">
+        <% documents.forEach(doc => { %>
+          <div class="document-card">
+            <%= doc.id %>.
+              <i class="fa-regular fa-file-pdf"></i>
+              <a href="/uploads/documents/<%= doc.file_name %>" target="_blank">
+                <%= doc.doc_title %>
+              </a>
+          </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+        <p>No documents available at the moment.</p>
+      <% } %>
+
+      <h2>Social Media</h2>
+      <ul>
+          <li><a href="https://www.facebook.com/search/top?q=university%20of%20mpumalanga" class="split-linnks"><i class="fa-brands fa-facebook" style="color: #180081;"></i> <p>facebook</p></a></li>
+          <li><a href="https://www.instagram.com/unimpumalanga/?__pwa=1" class="split-linnks"><i class="fa-brands fa-instagram" style="color: rgb(252, 15, 153);"></i> <p>instagram</p></a></li>
+          <li><a href="https://linkedin.com" class="split-linnks"><i class="fa-brands fa-linkedin-in" style="color: blue;"></i> <p>LinkedIn</p></a></li>
+      </ul>
+      
+      <h2>Quick Links</h2>
+      <ul>
+          <li><a href="#faq" class="split-linnks" ><i class="fa-solid fa-question"></i>  <p>FAQ</p></a></li>
+          <li><a href="#support" class="split-linnks" ><i class="fa-solid fa-info"></i> <p>Support</p></a></li>
+          <li><a href="#feedback" class="split-linnks" ><i class="fa-solid fa-comment"></i> <p>Feedback</p></a></li>
+      </ul>
+
+      
+    </nav>
+    <section class="main-content">
+      
+      <header>
+        <h1>University Media Posts</h1> <!-- Title for the posts section -->
+        
+        <!-- Search bar for filtering posts by title -->
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="Search posts by title...">
+          <button id="search-button">
+            <i class="fa fa-search"></i> <!-- Search icon -->
+          </button>
+        </div>
+      </header>
+      
+      <div class="posts"> 
+        <% posts.forEach(post => { %>
+          <div class="post">
+            <h2 class="post-title"><i class="fa-brands fa-medium" style="color: #180081; font-size:xx-large;"></i> <strong><%= post.title %></strong>
+              <i class="fa-regular fa-clock" style="font-size: small;"></i>
+              <small style="font-size: small; font-weight:100;"><%= new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></small>
+            </h2>
+            
+            <p class="post-location"><strong>Location:</strong> <i class="fa-solid fa-location-dot"></i> <%= post.location %></p>
+            
+            <% if (post.media_url.endsWith('.mp4')) { %>
+              <video width="300" controls autoplay loop class="post-image">
+                <source src="/<%= post.media_url %>" type="video/mp4" class="post-image">
+                Your browser does not support the video tag.
+              </video>
+            <% } else { %>
+              <img src="/<%= post.media_url %>" alt="Post image" width="300" class="post-image">
+            <% } %>
+    
+            <div class="action-btns">
+              <button class="post-btn" onclick="toggleCommentForm(this)">
+                <i class="fa-solid fa-comment" style="color: black;"></i>
+                <small style="font-size: small; font-weight:100; color: black;">Comment</small>
+              </button>
+              <button class="post-btn">
+                <i class="fa-brands fa-whatsapp" style="color: green;"></i>
+                <small style="font-size: small; font-weight:100; color: black;">WhatsApp Share</small>
+              </button>
+            </div>
+    
+            <p class="post-description" style="color:#333; font-size: 13px;">
+              <strong style="color: black;">Post Description: </strong>
+              <%= post.description %>
+            </p>
+    
+            <div class="comments-section">
+              <h3>Comments:</h3>
+              <% const comments = JSON.parse(post.comments || '[]'); %>
+              <% comments.forEach(comment => { %>
+                <div class="comment">
+                  <strong><%= comment.username || 'Anonymous' %>:</strong> <%= comment.comment_text %>
+                </div>
+              <% }) %>
+            </div>
+    
+            <form class="comment-form hidden" action="/managecomment/add-comment" method="POST">
+              <input type="hidden" name="postId" value="<%= post.id %>">
+              <input type="text" name="userName" placeholder="Your Name (optional)" class="comment-input">
+              <textarea name="commentText" placeholder="Add a comment..." class="comment-input" required></textarea>
+              <button type="submit" class="comment-button">Post Comment</button>
+            </form>
+            
+          </div>
+        <% }) %>
+      </div>
+    </section>
+
+    <!-- Announcements Section -->
+    
+    </aside>
+  </main>
+  <section class="about-us" id="about">
+    <div class="container">
+      <h1>About Us</h1>
+      <p>
+        The <strong>University of Mpumalanga (UMP)</strong>, established in 2014, is one of South Africa’s newest and fastest-growing institutions of higher learning, located in the heart of Mpumalanga Province. As a beacon of knowledge and transformation, UMP is committed to offering world-class education while addressing the unique needs of the region and the country at large.
+      </p>
+      <h2>Our Vision</h2>
+      <p>
+        To be an African university leading in creating opportunities for sustainable development through innovation.
+      </p>
+      <h2>Our Mission</h2>
+      <p>
+        The University of Mpumalanga is dedicated to fostering an environment of academic excellence, creativity, and social responsibility. We aim to produce graduates who are equipped to be globally competitive while contributing to the socio-economic development of South Africa and the world.
+      </p>
+      <h2>Our Campuses</h2>
+      <p>
+        UMP operates from two campuses:
+      </p>
+      <ul>
+        <li><strong>Mbombela Campus:</strong> Located in the city of Mbombela, this is the university’s main campus and home to modern academic facilities, student residences, and a vibrant student community.</li>
+        <li><strong>Siyabuswa Campus:</strong> Situated in the Nkangala District, this campus focuses on education studies, particularly teacher training, fostering a new generation of educators for the country.</li>
+      </ul>
+      <h2>Academic Offerings</h2>
+      <p>
+        UMP offers a wide range of <strong>undergraduate</strong> and <strong>postgraduate</strong> programs in fields such as:
+      </p>
+      <ul>
+        <li>Agriculture</li>
+        <li>Education</li>
+        <li>Information and Communication Technology</li>
+        <li>Natural Sciences</li>
+        <li>Hospitality and Tourism Management</li>
+        <li>Development Studies</li>
+      </ul>
+      <h2>Why Choose UMP?</h2>
+      <ul>
+        <li><strong>World-Class Facilities:</strong> Modern lecture halls, laboratories, libraries, and recreational areas.</li>
+        <li><strong>Experienced Faculty:</strong> Academics who are leaders in their fields, dedicated to nurturing the next generation of professionals.</li>
+        <li><strong>Strategic Location:</strong> Nestled in a province known for its natural beauty, including iconic landmarks like the Kruger National Park.</li>
+        <li><strong>Student Support:</strong> Comprehensive academic and emotional support programs to ensure every student thrives.</li>
+      </ul>
+      <p>
+        For more information about admissions, programs, and events, visit our website: <a href="http://www.ump.ac.za" target="_blank">www.ump.ac.za</a>.
+      </p>
+    </div>
+  </section>
+  
+  
+  <footer>
+    <ul id="eventList" class="event-list">
+      
+    </ul>
+  </footer>
+  <script>
+    // Function to format the date
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+    // Assuming post.date is in a format that can be parsed by the Date constructor
+    const formattedDate = formatDate(post.date);
+  </script>
+  <script>
+    document.getElementById('search-button').addEventListener('click', () => {
+      const query = document.getElementById('search-input').value.trim();
+      if (query) {
+        window.location.href = `/search?query=${encodeURIComponent(query)}`;
+      }
+    });
+  
+    document.getElementById('search-input').addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('search-button').click();
+      }
+    });
+  </script>
+  <script>
+    function toggleCommentForm(button) {
+      // Find the closest form element to the button
+      const commentForm = button.closest('.post').querySelector('.comment-form');
+    
+      // Toggle the 'hidden' class on the comment form
+      commentForm.classList.toggle('hidden');
+    }
+  </script>
+  <script>
+    // JavaScript to fetch and display comments
+    function loadComments(postId) {
+      fetch(`/get-comments/${postId}`)
+        .then(response => response.json())
+        .then(comments => {
+          const commentsSection = document.getElementById(`comments-${postId}`);
+          commentsSection.innerHTML = "";  // Clear existing comments
+  
+          comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `
+              <p><strong>${comment.username}</strong> on ${new Date(comment.date).toLocaleString()}</p>
+              <p>${comment.comment_text}</p>
+            `;
+            commentsSection.appendChild(commentElement);
+          });
+        })
+        .catch(error => console.error('Error loading comments:', error));
+    }
+  </script>
+  <script>
+    function handleCardClick(card) {
+      const confirmed = confirm("Are you sure you have read this?");
+      if (confirmed) {
+          card.style.display = "none";
+      }
+    }
+  </script>
+  <script>
+    document.getElementById('search-input').addEventListener('input', (event) => {
+      const query = event.target.value.toLowerCase();
+      document.querySelectorAll('.post').forEach(post => {
+          const title = post.querySelector('.post-title').textContent.toLowerCase();
+          post.style.display = title.includes(query) ? 'block' : 'none';
+      });
+  });
+  
+  </script>
+</body>
+</html>
