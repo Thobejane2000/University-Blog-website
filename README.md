@@ -5,12 +5,13 @@
 ***************************************************
 HOW TO RUN?
 1. download and extract the university-website.zip
-2. ensure you have node.js downloaded on local machine
-3. load university-website into vscode
-4. in bash: run > node app.js
-5. navigate to http://localhost:3000/ in your local browser
-6. adminlogin: **username> user**
-7. adminlogin: **password> 123**
+2. extract 'node_modules.zip' and copy the folder inside and paste in project directory
+3. ensure you have node.js downloaded on local machine
+4. load university-website into vscode
+5. in bash: run > node app.js
+6. navigate to http://localhost:3000/ in your local browser
+7. adminlogin: **username> user**
+8. adminlogin: **password> 123**
 ***************************************************
 
 ***************************************************
