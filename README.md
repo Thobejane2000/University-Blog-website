@@ -8,9 +8,9 @@ HOW TO RUN?
 2. ensure you have node.js downloaded on local machine
 3. load university-website into vscode
 4. in bash: run > node app.js
-5. navigate to http://localhost:3330/ in your local browser
-6. adminlogin: username>user
-7. adminlogin: password>123
+5. navigate to http://localhost:3000/ in your local browser
+6. adminlogin: **username> user**
+7. adminlogin: **password> 123**
 ***************************************************
 
 ***************************************************
